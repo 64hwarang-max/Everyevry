@@ -1,4 +1,4 @@
-<!-- 성장일지 v3.43 · 2026-10-11 · 어성경 1년 계획 = 책 Vol.1~12 Day 그대로 -->
+<!-- 성장일지 v3.44 · 2026-10-11 · 🙏 기도노트 (기도제목·분류·오늘 기도·응답) -->
 <!doctype html>
 <html lang="ko" class="simple">
 <head>
@@ -1418,6 +1418,41 @@ nav.main button[data-navh]{display:none!important}
 
 /*BIBLE{*/
 .eo .eopl{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.prhd h3{margin:0}
+.prsum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.prsum>div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--paper)}
+.prsum b{display:block;font-size:1.25rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.prsum b small{font-size:.8rem;font-weight:400;color:var(--muted)}
+.prsum span{font-size:.76rem;color:var(--muted)}
+.pradd{display:flex;flex-direction:column;gap:8px}
+.pradd[open]{gap:8px}
+.pradd summary{cursor:pointer;list-style:none;color:#b07d12}
+.pradd summary::-webkit-details-marker{display:none}
+.pradd textarea,.pradd input,.prc.ed textarea,.prc.ed input,.prc.ed select,.pradd select{width:100%;box-sizing:border-box;margin-top:6px}
+.prf button{font-size:.8rem;white-space:nowrap;padding-inline:2px}
+.prcf{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-bottom:8px}
+.prcf .chip{flex:none;cursor:pointer;font:inherit;font-size:.8rem;padding:4px 10px;background:var(--paper);color:var(--ink)}
+.prcf .chip.on{background:#b07d12;border-color:#b07d12;color:#fff;font-weight:700}
+.prq{width:100%;box-sizing:border-box;margin-bottom:8px}
+.pyg h4{margin:14px 2px 6px;font-size:.88rem;color:#b07d12}
+.prc{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;align-items:start;background:var(--card,var(--paper));border:1px solid var(--line);border-radius:12px;padding:10px 12px 8px 8px;margin-bottom:8px}
+.prc.td{border-color:color-mix(in srgb,#b07d12 45%,var(--line))}
+.prc.ans{background:color-mix(in srgb,#b07d12 7%,var(--paper))}
+.prc.rest{opacity:.75}
+.prc.ed{display:flex;flex-direction:column;gap:8px;padding:12px}
+.prck{width:28px;height:28px;border-radius:50%;border:2px solid #b07d12;background:transparent;color:#fff;font-weight:700;display:grid;place-items:center;padding:0;margin-top:1px;cursor:pointer;font-size:.85rem}
+.prck.on{background:#b07d12}
+span.prck{border:0;cursor:default;font-size:1.05rem;color:var(--ink)}
+.prt{font-weight:600;line-height:1.45;overflow-wrap:anywhere}
+.prm{font-size:.78rem;color:var(--muted);margin-top:2px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.prcat{border:1px solid color-mix(in srgb,#b07d12 50%,var(--line));color:#b07d12;border-radius:999px;padding:0 7px;font-weight:600}
+.prwho{color:var(--ink)}
+.prv{font-size:.82rem;margin-top:4px;color:var(--ink)}
+.prmemo{font-size:.84rem;margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--muted)}
+.pran{font-size:.86rem;margin-top:6px;padding:6px 8px;border-radius:8px;background:color-mix(in srgb,#b07d12 12%,var(--paper));overflow-wrap:anywhere}
+.pract{gap:4px;margin-top:4px;flex-wrap:wrap}
+.pract .del{font-size:.8rem}
+#bbtab button{white-space:nowrap}
 .eoanc summary{cursor:pointer;list-style:none;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
 .eoanc summary::-webkit-details-marker{display:none}
 .eoanc summary::after{content:'▸';margin-left:auto;color:var(--mut)}.eoanc[open] summary::after{content:'▾'}
@@ -5869,7 +5904,7 @@ function memRate(id,r){const S=memS();const p=S[id]||{b:0,n:0,t0:today()};p.n=(p
 function memStartNew(setId){const s=memSets().find(x=>x.id===setId);if(!s)return null;for(const g of s.g)for(const it of g.i){if(!it.d&&!memS()[it.id]){memS()[it.id]={b:0,n:0,t0:today(),due:today()};saveSet().catch(()=>{});return it.id}}return null}
 function memWeekNew(){const mon=mondayOf(today());return Object.values(memS()).filter(p=>p.t0&&p.t0>=mon).length}
 function memCount(s){let t=0,d=0,l=0;const seen=new Set();s.g.forEach(g=>g.i.forEach(it=>{if(it.d||seen.has(it.id))return;seen.add(it.id);t++;const st=memSt(it.id);if(st===3)d++;else if(st)l++}));return{t,d,l}}
-function memTabsHTML(){return`<div class="seg" id="bbtab" style="margin:10px 0 6px;--k:var(--acc)">${[['read','📖 성경 읽기'],['eo','📚 어성경'],['mem','🧠 암송'],['hymn','🎵 찬송가']].map(([k,l])=>`<button data-bt="${k}" class="${bbTab===k?'on':''}">${l}</button>`).join('')}</div>`}
+function memTabsHTML(){return`<div class="seg" id="bbtab" style="margin:10px 0 6px;--k:var(--acc)">${[['read','📖 성경'],['eo','📚 어성경'],['pray','🙏 기도'],['mem','🧠 암송'],['hymn','🎵 찬송']].map(([k,l])=>`<button data-bt="${k}" class="${bbTab===k?'on':''}">${l}</button>`).join('')}</div>`}
 function memTabsBind(R){R.querySelectorAll('[data-bt]').forEach(b=>b.onclick=()=>{bbTab=b.dataset.bt;if(bbTab==='mem')memV='home';if(bbTab==='hymn')hyOpen=null;renderBible();window.scrollTo(0,0)})}
 async function renderMem(R){const A=memAll();const due=[...A.values()].filter(it=>memDue(it.id));const seenDue=[...new Map(due.map(x=>[x.id,x])).values()];
   if(memV==='home'){const cur=SET.memCur||'fs';const S=memSets();
@@ -5944,7 +5979,7 @@ function renderHymn(R){const H=hyL().slice().sort((a,b)=>(a.n||9999)-(b.n||9999)
 async function hyEdit(h){const n=await uiPrompt('찬송가 번호 (없으면 비워 두십시오)',h&&h.n?String(h.n):'');if(n==null)return;const t=await uiPrompt('제목',h?h.t:'');if(!t||!t.trim())return;const x=await uiPromptML('가사 (절 사이는 빈 줄)',h?h.x:'');if(x==null)return;
   if(h){h.n=+n||0;h.t=t.trim();h.x=x}else{const o={id:'hy-'+uid(),n:+n||0,t:t.trim(),x};hyL().push(o);hyOpen=o.id}await saveSet().catch(()=>{});renderBible()}
 
-async function renderBible(){const R=$('#bbbody');if(!R)return;const S=bbS();if(bbTab==='mem')return renderMem(R);if(bbTab==='hymn')return renderHymn(R);if(bbTab==='eo'&&typeof renderEo==='function')return renderEo(R);
+async function renderBible(){const R=$('#bbbody');if(!R)return;const S=bbS();if(bbTab==='mem')return renderMem(R);if(bbTab==='hymn')return renderHymn(R);if(bbTab==='eo'&&typeof renderEo==='function')return renderEo(R);if(bbTab==='pray'&&typeof renderPrayer==='function')return renderPrayer(R);
   if(bbView==='home'){setTimeout(()=>{if(bbTab==='read'&&!$('#bbtab')){R.insertAdjacentHTML('afterbegin',memTabsHTML());memTabsBind(R)}},0);const tot=Object.keys(S.read).length,td=Object.values(S.read).filter(d=>d===today()).length;const ot=BBC.slice(0,39).reduce((a,_,i)=>a+bbCnt(i),0),nt=BBC.slice(39).reduce((a,_,i)=>a+bbCnt(39+i),0);
     const L=S.last;R.innerHTML=`<div class="card nocol" style="--k:var(--acc)"><div class="bbhd"><h3>📖 성경 읽기</h3><span class="hint">개역개정판</span></div>
       <div class="gl" style="margin:8px 0"><input type="search" id="bbq" placeholder="바로 가기 · 예: 요 3:16, 시편 23, 창1" enterkeyhint="go"><button class="btn small" id="bbgo">가기</button></div>
@@ -7194,7 +7229,7 @@ async function openGoogleMgr(){const S=$('#sheet');S.hidden=false;const G=gcS(),
 /* ---------- navigation (6 groups) ---------- */
 const GROUPS={day:['day'],plan:['short','plan','gap','task','work','report'],pillar:['pillar','people','budget','care','routine','habit','cycle','export'],note:['note',/*BIBLE{*/'bible',/*}BIBLE*/'stuff'],goal:['vision','goal','years','wins']};
 const SUB2={td:['task','work'],rp:['routine','habit','cycle'],rv:['report'],rt:['routine']},SUB2L={td:'📋 할 일·쪼개기',rp:'🔁 반복',rv:'🪞 돌아보기',rt:'🔁 반복'},last2={td:'task',rp:'routine',rv:'report',rt:'routine'};
-const FEAT=[['bible','📖 성경','개역개정 읽기·읽은 장 표시'],['people','🤝 관계관리','사람별 만남·통화 기록'],['budget','💰 재정','수입·지출·예산'],['care','🩺 몸관리','몸 측정·수면·운동'],['work','🧩 큰 일 쪼개기','큰 일을 단계로 쪼개 하나씩 끝내기'],['habit','✅ 습관','습관표·습관루틴'],['lines','📜 한 줄','오늘의 한 줄·기분 모아보기'],['routine','⏰ 루틴','아침·저녁 루틴 순서대로 하기'],['cycle','🔁 주기 할 일','이발·세제처럼 주기가 있는 일'],['stuff','📦 제자리','물건 위치 기록'],['review','📊 기록 분석','숫자·목록으로 펼쳐 보기'],['gap','⏱️ 짜투리 시간','짜투리 시간 목록 · 오늘 실행 카드 · 오늘 계획 칸'],['wins','🏆 이룬 것','기간을 고르면 마친 목표·할 일·습관·책·운동을 모아 보기']];
+const FEAT=[['bible','📖 성경·기도','개역개정 읽기·어성경·기도노트·암송·찬송'],['people','🤝 관계관리','사람별 만남·통화 기록'],['budget','💰 재정','수입·지출·예산'],['care','🩺 몸관리','몸 측정·수면·운동'],['work','🧩 큰 일 쪼개기','큰 일을 단계로 쪼개 하나씩 끝내기'],['habit','✅ 습관','습관표·습관루틴'],['lines','📜 한 줄','오늘의 한 줄·기분 모아보기'],['routine','⏰ 루틴','아침·저녁 루틴 순서대로 하기'],['cycle','🔁 주기 할 일','이발·세제처럼 주기가 있는 일'],['stuff','📦 제자리','물건 위치 기록'],['review','📊 기록 분석','숫자·목록으로 펼쳐 보기'],['gap','⏱️ 짜투리 시간','짜투리 시간 목록 · 오늘 실행 카드 · 오늘 계획 칸'],['wins','🏆 이룬 것','기간을 고르면 마친 목표·할 일·습관·책·운동을 모아 보기']];
 const FEATK=FEAT.map(x=>x[0]);
 const LVL={mid:['work','care','cycle','stuff','years','review','lines','score','me'],easy:['short','report','work','pillar','people','budget','care','routine','habit','cycle',/*BIBLE{*/'bible',/*}BIBLE*/'stuff','vision','goal','years','lines','review','me','score']};
 const lvNow=()=>{try{return SET.lvl==='mid'||SET.lvl==='easy'?SET.lvl:'full'}catch(e){return'full'}};const LVH=()=>LVL[lvNow()]||[];
@@ -7202,7 +7237,7 @@ const isHid=k=>{try{return !!((SET.hide&&SET.hide.includes(k))||LVH().includes(k
 const PTOOL={spirit:'bible',rel:'people',fin:'budget',body:'care',work:'work',habit:'habit',mind:'lines'};
 const PILT=['pillar',/*BIBLE{*/'bible',/*}BIBLE*/'people','budget','care','cycle','work','habit','lines','export'];
 const pilTools=()=>{const o=[];const GP=PILT.filter(t=>!isHid(t));SCORE.forEach(([k])=>{const t=PTOOL[k];if(t&&GP.includes(t)&&!o.includes(t))o.push(t)});GP.forEach(t=>{if(t!=='pillar'&&t!=='export'&&!o.includes(t))o.push(t)});['cycle','habit'].forEach(t=>{const i=o.indexOf(t);if(i>=0){o.splice(i,1);o.push(t)}});return o};
-const SUBL={wins:'🏆 이룬 것',gap:'⏱️ 짜투리 시간',vision:'✨ 비전',years:'📜 지나온 해',short:'🎯 이번 주·단기',pillar:'🏛️ 삶의 기둥',plan:'🗓️ 계획',goal:'🎯 장·중기 목표',note:'📒 노트',cycle:'🔁 주기 할 일',routine:'⏰ 루틴',care:'🩺 몸관리',lines:'📜 한 줄',me:'🧬 나',report:'🪞 돌아보기',budget:'💰 재정',work:'🧩 큰 일 쪼개기',people:'🤝 관계관리',habit:'✅ 습관',review:'📊 기록 분석',score:'💯 점수',task:'📋 할 일',stuff:'📦 제자리',export:'⚙️ 설정·백업'/*BIBLE{*/,bible:'📖 성경'/*}BIBLE*/};
+const SUBL={wins:'🏆 이룬 것',gap:'⏱️ 짜투리 시간',vision:'✨ 비전',years:'📜 지나온 해',short:'🎯 이번 주·단기',pillar:'🏛️ 삶의 기둥',plan:'🗓️ 계획',goal:'🎯 장·중기 목표',note:'📒 노트',cycle:'🔁 주기 할 일',routine:'⏰ 루틴',care:'🩺 몸관리',lines:'📜 한 줄',me:'🧬 나',report:'🪞 돌아보기',budget:'💰 재정',work:'🧩 큰 일 쪼개기',people:'🤝 관계관리',habit:'✅ 습관',review:'📊 기록 분석',score:'💯 점수',task:'📋 할 일',stuff:'📦 제자리',export:'⚙️ 설정·백업'/*BIBLE{*/,bible:'📖 성경·기도'/*}BIBLE*/};
 const SECS_ALL=['wins','gap','short','vision','years','me','pillar','cycle','goal','plan','day','note','budget','work','people','habit','routine','care','report','lines','review','score','task','stuff','export'/*BIBLE{*/,'bible'/*}BIBLE*/];
 let curSection='day';const lastSub={plan:'short',goal:'vision',note:'note',pillar:'pillar'};
 const SEC_ORDER=['day','short','plan','gap','task','work','report','pillar','people','budget','care','routine','habit','cycle','note',/*BIBLE{*/'bible',/*}BIBLE*/'stuff','vision','goal','years','wins','export'];const groupOf=v=>Object.keys(GROUPS).find(g=>GROUPS[g].includes(v))||'day';
@@ -8318,6 +8353,7 @@ function wnCollect(A,B){
   try{BOOKS.items.forEach(b=>{if(b.st==='done'&&wnIn(b.end,A,B)){R.books.push(b);mon(b.end)}})}catch(e){}
   try{const r=(SET.bible&&SET.bible.read)||{};R.bible=Object.values(r).filter(d=>wnIn(d,A,B)).length}catch(e){}
   try{for(const n of NOTES.values())if(wnIn(n.date,A,B))R.notes++}catch(e){}
+  try{((SET.prayer||{}).items||[]).forEach(x=>{if(x.ans&&wnIn(x.ad,A,B))R.ansPr.push({n:x.cat||'기도',t:x.t,d:x.ad,an:x.an||''})})}catch(e){}
   try{PEOPLE.list.forEach(p=>{(p.prays||[]).forEach(x=>{if(x.ans&&wnIn(x.ad,A,B))R.ansPr.push({n:p.name,t:x.t,d:x.ad,an:x.an||''})});(p.courses||[]).forEach(c=>{const k=Object.values(c.done||{}).filter(d=>wnIn(d,A,B)).length;if(k){R.lessons+=k;R.lessonP[p.name]=(R.lessonP[p.name]||0)+k}if(c.end&&wnIn(c.end,A,B))R.courseEnd.push({n:p.name,c:c.name,d:c.end})})});R.ansPr.sort((a,b)=>(b.d||'').localeCompare(a.d||''))}catch(e){}
   R.goals.sort((a,b)=>(b.doneAt||'').localeCompare(a.doneAt||''));R.tasks.sort((a,b)=>(b.doneAt||'').localeCompare(a.doneAt||''));R.steps.sort((a,b)=>(b.t.doneAt||'').localeCompare(a.t.doneAt||''));
   R.books.sort((a,b)=>(b.end||'').localeCompare(a.end||''));R.pri.reverse();R.great.reverse();R.step.reverse();R.gap.reverse();
@@ -8507,7 +8543,7 @@ const CR_SRC=[
    try{if(!ok)ok=PEOPLE.list.some(p=>(p.courses||[]).some(c=>Object.values(c.done||{}).includes(o.date)))}catch(e){}
    return{v:ok?1:0,t:ok?'했음':''}}],
  /*BIBLE{*/['bible','성경 읽기','장',1,(o,g)=>{let n=0;try{n=bbDayList(o.date).length}catch(e){}return n?crRatio(n,g,'장'):{v:0,t:''}}],/*}BIBLE*/
- ['pray','기도','분',10,(o,g)=>{const m=+((o.ar||{}).spirit||{}).pray||0;if(CR_HAB(o,/기도/)&&m<(+g||1))return{v:1,t:m?`${m}분 · 습관 체크`:'습관 체크'};return m?crRatio(m,g,'분'):{v:0,t:''}}],
+ ['pray','기도','분',10,(o,g)=>{const m=+((o.ar||{}).spirit||{}).pray||0;{const pn=typeof prLogN==='function'?prLogN(o.date):0;if(pn&&m<(+g||1))return{v:1,t:`기도노트 ${pn}개${m?` · ${m}분`:''}`}}if(CR_HAB(o,/기도/)&&m<(+g||1))return{v:1,t:m?`${m}분 · 습관 체크`:'습관 체크'};return m?crRatio(m,g,'분'):{v:0,t:''}}],
  ['wor','예배','',0,o=>{const m=+((o.ar||{}).spirit||{}).wor||0;const ok=m>0||[...(o.time||[]),...(o.plan||[])].some(b=>/예배|미사/.test(`${b.act||''} ${b.cat||''}`))||CR_HAB(o,/예배/);return{v:ok?1:0,t:ok?(m?m+'분':'했음'):''}}],
  ['grat','감사 기록','개',3,(o,g)=>{const n=(o.mgrat||[]).filter(tx).length;return n?crRatio(n,g,'개'):{v:0,t:''}}],
  ['strength','근력 운동','분',20,(o,g)=>{const r=CR_EXM(o,CR_STR);if(!r.hit)return{v:CR_HAB(o,CR_STR)?1:0,t:CR_HAB(o,CR_STR)?'습관 체크':''};return r.m?crRatio(r.m,g,'분'):{v:1,t:'했음'}}],
@@ -8846,6 +8882,104 @@ async function renderEo(R){
     if(n>1&&!eoCovered(0,L[n-1].s)&&await uiConfirm(`Day 1~${n-1}을(를) 이미 읽은 것으로 표시할까요?`)){E.r.push([0,L[n-1].s,today()])}
     saveSet().catch(()=>{});eoAncOpen=false;toast(`📖 오늘이 책 Day ${n}이(가) 되도록 시작일을 ${E.start.replace(/-/g,'.')}로 맞췄습니다.`);re()}}
   R.querySelectorAll('[data-eoreset]').forEach(b=>b.onclick=async()=>{if(!await uiConfirm('어성경 읽기 진도를 처음부터 다시 시작할까요? (읽은 장 기록은 그대로 남습니다)'))return;const E=eoSt();E.r=[];E.start='';saveSet().catch(()=>{});re()})}
+
+/* ===================== 🙏 기도노트 (성장일지 v3.44) =====================
+   기도제목을 분류별로 적고, 날마다 ‘오늘 기도함’을 체크하고, 응답을 기록한다.
+   사람(관계관리)에 걸린 기도제목도 같은 목록에 함께 보이고, 대상(사람)을 고르면 그 사람 카드에도 남는다.
+   저장: 내 기도제목은 SET.prayer.items, 사람 기도제목은 PEOPLE의 p.prays (같은 모양: t·d·ans·ad·an + cat·v·memo·log·rest) */
+let prF='on',prCat='',prQ='',prEdit=null,prFormOpen=false;
+const PR_CATS0=['개인','가정','교회','나라·민족','직장·군','관계','선교','감사'];
+function prSt(){if(!SET.prayer||typeof SET.prayer!=='object')SET.prayer={};const P=SET.prayer;if(!Array.isArray(P.items))P.items=[];if(!Array.isArray(P.cats)||!P.cats.length)P.cats=PR_CATS0.slice();return P}
+const prSave=()=>saveSet().catch(()=>{});
+/* 모든 기도제목: {x, p(사람 또는 null)} */
+function prAll(){const L=prSt().items.map(x=>({x,p:null}));try{(PEOPLE.list||[]).forEach(p=>(p.prays||[]).forEach(x=>L.push({x,p})))}catch(e){}return L}
+const prCatOf=e=>e.x.cat||(e.p?'관계':'개인');
+const prStat=x=>x.ans?'ans':x.rest?'rest':'on';
+const prLog=x=>(x.log&&typeof x.log==='object'&&!Array.isArray(x.log))?x.log:(x.log={});
+const prDays=x=>x.d?Math.max(1,Math.round((parseD(x.ans&&x.ad?x.ad:today())-parseD(x.d))/864e5)+1):0;
+function prPersist(e){if(e.p){try{pcSave(e.p)}catch(er){savePeople()}}else prSave()}
+/* 오늘(또는 그날) 기도노트에서 기도한 제목 수 — 세부 평가 ‘기도’에서 씀 */
+function prLogN(d){d=d||today();return prAll().filter(e=>prLog(e.x)[d]).length}
+function prFind(id){return prAll().find(e=>e.x.id===id)}
+function prPeopleOpts(sel){let L=[];try{L=(PEOPLE.list||[]).slice().sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'))}catch(e){}
+  return`<option value="">대상 없음</option>`+L.map(p=>`<option value="${esc(p.id)}" ${sel===p.id?'selected':''}>${esc(p.name||'이름 없음')}</option>`).join('')}
+function prCatOpts(sel){const C=prSt().cats.slice();if(sel&&!C.includes(sel))C.push(sel);return C.map(c=>`<option ${c===sel?'selected':''}>${esc(c)}</option>`).join('')}
+function prCardHTML(e){const x=e.x,st=prStat(x),T=today();const lg=prLog(x);const n=Object.keys(lg).length;const on=!!lg[T];
+  if(prEdit===x.id)return`<div class="prc ed" data-prid="${esc(x.id)}">
+    <label class="f">기도제목<textarea id="pre_t" rows="2">${esc(x.t||'')}</textarea></label>
+    <div class="g2"><label class="f">분류<select id="pre_c">${prCatOpts(prCatOf(e))}</select></label><label class="f">대상(사람)<select id="pre_p">${prPeopleOpts(e.p?e.p.id:'')}</select></label></div>
+    <label class="f">붙잡는 말씀<input id="pre_v" value="${esc(x.v||'')}" placeholder="예: 빌 4:6-7"></label>
+    <label class="f">메모<textarea id="pre_m" rows="2" placeholder="상황, 구체적인 기도 내용">${esc(x.memo||'')}</textarea></label>
+    <div class="g2"><label class="f">기도 시작일<input type="date" id="pre_d" value="${esc(x.d||T)}"></label>${x.ans?`<label class="f">응답일<input type="date" id="pre_ad" value="${esc(x.ad||T)}"></label>`:'<span></span>'}</div>
+    ${x.ans?`<label class="f">응답 내용<textarea id="pre_an" rows="2">${esc(x.an||'')}</textarea></label>`:''}
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:6px"><span class="row" style="gap:6px">${st==='on'?'<button class="del" data-prrest="1">내려놓기</button>':''}<button class="del" data-prdel="1" style="color:var(--c-mis)">지우기</button></span><span class="row" style="gap:6px"><button class="btn small ghost" data-prcancel="1">취소</button><button class="btn small" data-prsave="1">저장</button></span></div></div>`;
+  const who=e.p?`<span class="prwho">👤 ${esc(e.p.name||'')}</span>`:'';
+  const meta=[`<span class="prcat">${esc(prCatOf(e))}</span>`,who,st==='ans'?`🙌 ${md(x.ad||T)} 응답${x.d?` · ${prDays(x)}일 만에`:''}`:st==='rest'?`내려놓음${x.rd?` · ${md(x.rd)}`:''}`:`${x.d?`${prDays(x)}일째`:''}${n?` · ${n}번 기도`:''}`].filter(Boolean).join(' ');
+  return`<div class="prc ${st} ${on?'td':''}" data-prid="${esc(x.id)}">
+    ${st==='on'?`<button class="prck ${on?'on':''}" data-prtg="${esc(x.id)}" aria-label="${on?'오늘 기도 취소':'오늘 기도함'}">${on?'✓':''}</button>`:`<span class="prck ${st}">${st==='ans'?'🙌':'·'}</span>`}
+    <div class="prb"><div class="prt">${esc(x.t||'')}</div><div class="prm">${meta}</div>
+      ${x.v?`<div class="prv">📖 ${esc(x.v)}</div>`:''}${x.memo?`<div class="prmemo">${esc(x.memo)}</div>`:''}
+      ${st==='ans'&&x.an?`<div class="pran">🙌 ${esc(x.an)}</div>`:''}
+      <div class="row pract">${st==='on'?`<button class="del" data-prans="${esc(x.id)}">🙌 응답</button>`:`<button class="del" data-prback="${esc(x.id)}">↩ 다시 기도</button>`}<button class="del" data-predit="${esc(x.id)}">✎ 고치기</button></div></div></div>`}
+function prHTML(){const P=prSt(),T=today();const A=prAll();const on=A.filter(e=>prStat(e.x)==='on'),ans=A.filter(e=>prStat(e.x)==='ans'),rest=A.filter(e=>prStat(e.x)==='rest');
+  const tdN=on.filter(e=>prLog(e.x)[T]).length;const yr=T.slice(0,4);const ansY=ans.filter(e=>(e.x.ad||'').startsWith(yr)).length;
+  let h=`<div class="card nocol prhd" style="--k:#b07d12"><div class="row" style="justify-content:space-between;align-items:baseline"><h3>🙏 기도노트</h3><span class="hint">${md(T)}</span></div>
+    <div class="prsum"><div><b>${on.length}</b><span>기도 중</span></div><div><b>${tdN}<small>/${on.length}</small></b><span>오늘 기도</span></div><div><b>${ans.length}</b><span>응답${ansY?` · 올해 ${ansY}`:''}</span></div></div>
+    ${on.length?`<div class="pilbar" style="margin-top:8px"><i style="width:${on.length?Math.round(tdN/on.length*100):0}%;background:#b07d12"></i></div>`:''}</div>`;
+  h+=`<details class="card nocol pradd" ${prFormOpen||!A.length?'open':''}><summary><b>＋ 기도제목 적기</b></summary>
+    <textarea id="prn_t" rows="2" placeholder="예: 아버지 건강 회복, 이번 훈련을 안전하게 마치도록"></textarea>
+    <div class="g2"><label class="f">분류<select id="prn_c">${prCatOpts(prCat||P.cats[0])}</select></label><label class="f">대상(사람)<select id="prn_p">${prPeopleOpts('')}</select></label></div>
+    <input id="prn_v" placeholder="붙잡는 말씀 (선택) 예: 빌 4:6-7">
+    <div class="row" style="justify-content:space-between"><button class="del" data-prcats="1">분류 고치기</button><button class="btn small" id="prn_go">기도제목 추가</button></div>
+    <p class="hint" style="margin:0">대상(사람)을 고르면 관계관리의 그 사람 카드에도 같은 기도제목이 남습니다. 여러 줄을 적으면 한 줄씩 따로 들어갑니다.</p></details>`;
+  const cnt={on:on.length,ans:ans.length,rest:rest.length,all:A.length};
+  h+=`<div class="seg prf" style="margin:12px 0 8px">${[['on','기도 중'],['ans','응답'],['rest','내려놓음'],['all','전체']].map(([k,l])=>`<button data-prf="${k}" class="${prF===k?'on':''}">${l} ${cnt[k]}</button>`).join('')}</div>`;
+  const pool=prF==='all'?A:A.filter(e=>prStat(e.x)===prF);const cats=[...new Set([...P.cats,...pool.map(prCatOf)])].filter(c=>pool.some(e=>prCatOf(e)===c));
+  if(cats.length>1)h+=`<div class="chips prcf"><button class="chip ${!prCat?'on':''}" data-prc="">모두</button>${cats.map(c=>`<button class="chip ${prCat===c?'on':''}" data-prc="${esc(c)}">${esc(c)} ${pool.filter(e=>prCatOf(e)===c).length}</button>`).join('')}</div>`;
+  if(A.length>6)h+=`<input type="search" id="prq" class="prq" placeholder="기도제목·사람·말씀 찾기" value="${esc(prQ)}">`;
+  const q=prQ.trim();let L=pool.filter(e=>(!prCat||prCatOf(e)===prCat)&&(!q||[e.x.t,e.x.memo,e.x.v,e.x.an,e.p&&e.p.name].some(s=>(s||'').includes(q))));
+  if(prF==='ans')L.sort((a,b)=>(b.x.ad||'').localeCompare(a.x.ad||''));else L.sort((a,b)=>(a.x.d||'').localeCompare(b.x.d||''));
+  if(!L.length)h+=`<p class="empty">${A.length?'해당하는 기도제목이 없습니다.':'아직 적은 기도제목이 없습니다. 위 칸에 기도제목을 적어 보십시오.'}</p>`;
+  else if(prF==='on'&&!prCat&&!q){const C=[...new Set([...P.cats,...L.map(prCatOf)])].filter(c=>L.some(e=>prCatOf(e)===c));
+    C.forEach(c=>{const g=L.filter(e=>prCatOf(e)===c);const d=g.filter(e=>prLog(e.x)[T]).length;h+=`<div class="pyg"><h4>${esc(c)} <small class="hint">${d}/${g.length}</small></h4>${g.map(prCardHTML).join('')}</div>`})}
+  else h+=`<div class="pyg">${L.map(prCardHTML).join('')}</div>`;
+  if(on.length)h+=`<div class="row" style="margin-top:10px;gap:8px;flex-wrap:wrap"><button class="del" data-prcopy="1">📋 기도 목록 복사</button>${ans.length?'<button class="del" data-prcopy="ans">🙌 응답 기록 복사</button>':''}</div>`;
+  return h}
+function renderPrayer(R){const tabs=typeof memTabsHTML==='function'?memTabsHTML():'';R.innerHTML=tabs+prHTML();try{memTabsBind(R)}catch(e){}prBind(R)}
+function prBind(R){const re=()=>{const y=window.scrollY;renderPrayer(R);window.scrollTo(0,y)};const T=today();
+  const dt=R.querySelector('.pradd');if(dt)dt.addEventListener('toggle',()=>{prFormOpen=dt.open});
+  const go=R.querySelector('#prn_go');if(go)go.onclick=()=>{const ts=(R.querySelector('#prn_t').value||'').split('\n').map(s=>s.replace(/^[\s\-•·\d.)]+/,'').trim()).filter(Boolean);if(!ts.length){toast('기도제목을 적어 주십시오.');return}
+    const cat=R.querySelector('#prn_c').value,pid=R.querySelector('#prn_p').value,v=(R.querySelector('#prn_v').value||'').trim();const p=pid&&(PEOPLE.list||[]).find(y=>y.id===pid);
+    ts.forEach(t=>{const x={id:'pr'+uid(),t:t.slice(0,300),d:T,ans:false,cat,log:{}};if(v)x.v=v;if(p){try{pcMig(p)}catch(e){}p.prays=p.prays||[];p.prays.push(x)}else prSt().items.push(x)});
+    if(p)pcSave(p);else prSave();prFormOpen=true;prF='on';toast(`🙏 기도제목 ${ts.length}개를 적었습니다.`);re();setTimeout(()=>{const t=R.querySelector('#prn_t');if(t)t.focus()},50)};
+  R.querySelectorAll('[data-prf]').forEach(b=>b.onclick=()=>{prF=b.dataset.prf;prCat='';prEdit=null;re()});
+  R.querySelectorAll('[data-prc]').forEach(b=>b.onclick=()=>{prCat=b.dataset.prc;re()});
+  const q=R.querySelector('#prq');if(q)q.oninput=()=>{prQ=q.value;const p=q.selectionStart;re();const n=R.querySelector('#prq');if(n){n.focus();try{n.setSelectionRange(p,p)}catch(e){}}};
+  R.querySelectorAll('[data-prtg]').forEach(b=>b.onclick=()=>{const e=prFind(b.dataset.prtg);if(!e)return;const lg=prLog(e.x);if(lg[T])delete lg[T];else lg[T]=1;prPersist(e);
+    const on=prAll().filter(z=>prStat(z.x)==='on');const d=on.filter(z=>prLog(z.x)[T]).length;if(lg[T]&&d===on.length)toast('🙏 오늘 모든 기도제목을 올려 드렸습니다.');re()});
+  R.querySelectorAll('[data-prans]').forEach(b=>b.onclick=async()=>{const e=prFind(b.dataset.prans);if(!e)return;let an='';try{an=await uiPrompt('어떻게 응답하셨는지 남겨 두십시오. (비워도 됩니다)','')}catch(er){}if(an===null)return;
+    e.x.ans=true;e.x.ad=T;e.x.an=String(an||'').trim();delete e.x.rest;prPersist(e);toast('🙌 응답된 기도로 옮겼습니다.');re()});
+  R.querySelectorAll('[data-prback]').forEach(b=>b.onclick=()=>{const e=prFind(b.dataset.prback);if(!e)return;e.x.ans=false;delete e.x.ad;delete e.x.an;delete e.x.rest;delete e.x.rd;prPersist(e);re()});
+  R.querySelectorAll('[data-predit]').forEach(b=>b.onclick=()=>{prEdit=b.dataset.predit;re()});
+  const ed=R.querySelector('.prc.ed');if(ed){const e=prFind(ed.dataset.prid);const v=s=>{const el=ed.querySelector(s);return el?el.value:null};
+    ed.querySelector('[data-prcancel]').onclick=()=>{prEdit=null;re()};
+    ed.querySelector('[data-prsave]').onclick=()=>{if(!e)return;const t=(v('#pre_t')||'').trim();if(!t){toast('기도제목을 적어 주십시오.');return}
+      const x=e.x;x.t=t.slice(0,300);x.cat=v('#pre_c');x.v=(v('#pre_v')||'').trim();x.memo=(v('#pre_m')||'').trim();x.d=v('#pre_d')||x.d;if(x.ans){x.ad=v('#pre_ad')||x.ad;x.an=(v('#pre_an')||'').trim()}
+      if(!x.v)delete x.v;if(!x.memo)delete x.memo;
+      const pid=v('#pre_p')||'';const cur=e.p?e.p.id:'';
+      if(pid!==cur){/* 대상 바꾸기: 원래 자리에서 빼서 새 자리에 */
+        if(e.p){e.p.prays=(e.p.prays||[]).filter(y=>y!==x);pcSave(e.p)}else{prSt().items=prSt().items.filter(y=>y!==x)}
+        const np=pid&&(PEOPLE.list||[]).find(y=>y.id===pid);if(np){try{pcMig(np)}catch(er){}np.prays=np.prays||[];np.prays.push(x);pcSave(np)}else prSt().items.push(x)}
+      else prPersist(e);prSave();prEdit=null;toast('고쳤습니다.');re()};
+    const rs=ed.querySelector('[data-prrest]');if(rs)rs.onclick=()=>{if(!e)return;e.x.rest=true;e.x.rd=T;prPersist(e);prEdit=null;toast('내려놓은 기도로 옮겼습니다.');re()};
+    ed.querySelector('[data-prdel]').onclick=async()=>{if(!e)return;if(!await uiConfirm('이 기도제목을 지울까요?'))return;if(e.p){e.p.prays=(e.p.prays||[]).filter(y=>y!==e.x);pcSave(e.p)}else{prSt().items=prSt().items.filter(y=>y!==e.x);prSave()}prEdit=null;re()}}
+  R.querySelectorAll('[data-prcats]').forEach(b=>b.onclick=async()=>{const P=prSt();let s=null;try{s=await uiPrompt('분류를 쉼표(,)로 나눠 적어 주십시오. 순서대로 보입니다.',P.cats.join(', '))}catch(e){}if(s==null)return;
+    const C=[...new Set(String(s).split(/[,\n]/).map(x=>x.trim()).filter(Boolean))];if(!C.length)return;P.cats=C.slice(0,20);prSave();toast('분류를 바꿨습니다.');re()});
+  R.querySelectorAll('[data-prcopy]').forEach(b=>b.onclick=async()=>{const A=prAll();let t='';
+    if(b.dataset.prcopy==='ans'){t=`🙌 응답된 기도\n`+A.filter(e=>prStat(e.x)==='ans').sort((a,b)=>(a.x.ad||'').localeCompare(b.x.ad||'')).map(e=>`- ${(e.x.ad||'').replace(/-/g,'.')} ${e.p?e.p.name+': ':''}${e.x.t}${e.x.an?` → ${e.x.an}`:''}`).join('\n')}
+    else{const on=A.filter(e=>prStat(e.x)==='on');const C=[...new Set([...prSt().cats,...on.map(prCatOf)])];t=`🙏 기도제목 (${T.replace(/-/g,'.')})\n`;C.forEach(c=>{const g=on.filter(e=>prCatOf(e)===c);if(g.length)t+=`\n■ ${c}\n`+g.map(e=>`- ${e.p?e.p.name+': ':''}${e.x.t}${e.x.v?` (${e.x.v})`:''}`).join('\n')+'\n'})}
+    try{await navigator.clipboard.writeText(t);toast('📋 복사했습니다.')}catch(e){uiPromptML?uiPromptML('아래 글을 길게 눌러 복사하십시오.',t):toast('복사하지 못했습니다.')}});
+}
 
 /*}BIBLE*/
 
